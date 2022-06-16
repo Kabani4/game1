@@ -19,7 +19,8 @@ int SDL_main()
 		SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
 		SDL_UpdateWindowSurface(window);
 		SDL_Delay(3000);
-	}
+		
+	}//леха гей
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
