@@ -8,10 +8,12 @@ display main_win;
 	while(main_win.isrunning)
 	{
 		
-	SDL_SetRenderDrawColor(main_win.ren, 200, 200, 200, 255);
+	SDL_SetRenderDrawColor(main_win.ren, 22, 192, 48, 255);
 	SDL_RenderClear(main_win.ren);
 
 	SDL_PollEvent(&main_win.ev);
+
+	main_win.draw_map_game();
 
 	SDL_RenderPresent(main_win.ren);
 
