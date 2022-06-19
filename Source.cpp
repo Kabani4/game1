@@ -1,29 +1,31 @@
-#include <SDL.h>
-#include <iostream>
+#include "game logic.h"
 
-
-SDL_Window* window{ nullptr };
-SDL_Surface* screenSurface{ nullptr };
-SDL_Surface* picture{ nullptr };
 
 int SDL_main(int argc, char* argv[])
 {
-	
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		std::cout << "Error sdl2 not found";
-	else
+display main_win;
+	main_win.INIT();
+	while(main_win.isrunning)
 	{
-		window = SDL_CreateWindow("Text above page", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, 640, 480, SDL_WINDOW_OPENGL);
-		screenSurface = SDL_GetWindowSurface(window);
-		SDL_FillRect(screenSurface, nullptr, SDL_MapRGB(screenSurface->format, 0x0, 0xFF, 0xFF));
-		SDL_UpdateWindowSurface(window);
-		SDL_Delay(3000);
+		
+	SDL_SetRenderDrawColor(main_win.ren, 200, 200, 200, 255);
+	SDL_RenderClear(main_win.ren);
+
+	SDL_PollEvent(&main_win.ev);
+
+	SDL_RenderPresent(main_win.ren);
+
+
+
+
+
+
+	SDL_Delay(1000/main_win.get_fps());
 	}
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	
+	
+	main_win.DEINIT(0);
 	return 0;
 }
 
 
-//sssss
