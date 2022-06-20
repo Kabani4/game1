@@ -11,10 +11,12 @@ m_hunter main_character;
 		
 	SDL_SetRenderDrawColor(main_win.ren, 22, 192, 48, 255);
 	SDL_RenderClear(main_win.ren);
-	while (SDL_PollEvent(&main_win.ev))
-	{
+	//while (SDL_PollEvent(&main_win.ev))
+	//{
+	SDL_PollEvent(&main_win.ev);
 		main_character.move(main_win.get_width(), main_win.get_height(), main_win.get_size(), main_win.get_fps(), main_win.ev);
-	}
+	//}
+	std::cout << "good" << std::endl;
 	main_win.draw_map_game();
 	main_win.draw_hunter(main_character.get_x(), main_character.get_y());
 	

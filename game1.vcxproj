@@ -79,13 +79,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <ExternalIncludePath>C:\Programs\SDL2\SDL2-2.0.22\include;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\Programs\SDL2\SDL2-2.0.22\lib\x64;C:\libs\SDL2_ttf-2.0.18\lib\x64;C:\libs\SDL2_image-2.0.5\lib\x64;C:\Programs\SDL2\SDL2-2.0.22\lib\x64;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Programs\SDL2\SDL2-2.0.22\include;C:\libs\SDL2_ttf-2.0.18;C:\libs\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\C++\libs C++\SDL2-2.0.22\lib\x64;D:\C++\libs C++\SDL2_ttf-2.0.18\lib\x64;D:\C++\libs C++\SDL2_image-2.0.5\lib\x64;C:\Programs\SDL2\SDL2-2.0.22\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\C++\libs C++\SDL2_image-2.0.5\include;D:\C++\libs C++\SDL2_ttf-2.0.18\include;D:\C++\libs C++\SDL2-2.0.22\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Programs\SDL2\SDL2-2.0.22\include;C:\libs\SDL2_ttf-2.0.18;C:\libs\SDL2_image-2.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Programs\SDL2\SDL2-2.0.22\lib\x64;C:\libs\SDL2_ttf-2.0.18\lib\x64;C:\libs\SDL2_image-2.0.5\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <IncludePath>D:\C++\libs C++\SDL2_image-2.0.5\include;D:\C++\libs C++\SDL2_ttf-2.0.18\include;D:\C++\libs C++\SDL2-2.0.22\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\C++\libs C++\SDL2-2.0.22\lib\x64;D:\C++\libs C++\SDL2_ttf-2.0.18\lib\x64;D:\C++\libs C++\SDL2_image-2.0.5\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

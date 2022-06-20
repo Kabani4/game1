@@ -119,26 +119,22 @@ void m_hunter::move(int width, int height, int size, int FPS, SDL_Event key_ev)
 		switch (key_ev.type)
 		{
 		case (SDL_KEYDOWN):
-			//switch (key_ev.key.keysym.scancode)
-			//{
-			//
-			//case SDL_SCANCODE_UP:
-			//	if (!isUpPressed)
-			//	isUpPressed = true;
-			//	else
-			//		break;
-			//	break;
-			//case SDL_SCANCODE_DOWN:
-			//	isDownPressed = true;
-			//	break;
-			//case SDL_SCANCODE_LEFT:
-			//	isLeftPressed = true;
-			//	break;
-			//case SDL_SCANCODE_RIGHT:
-			//	isRightPressed = true;
-			//	break;
-			//}
-			//break;
+			switch (key_ev.key.keysym.scancode)
+			{
+			case SDL_SCANCODE_UP:
+				isUpPressed = true;
+				break;
+			case SDL_SCANCODE_DOWN:
+				isDownPressed = true;
+				break;
+			case SDL_SCANCODE_LEFT:
+				isLeftPressed = true;
+				break;
+			case SDL_SCANCODE_RIGHT:
+				isRightPressed = true;
+				break;
+			}
+			break;
 			
 			case (SDL_KEYUP):
 			switch (key_ev.key.keysym.scancode)
