@@ -25,6 +25,25 @@ public:
 	SDL_Rect rock = {rock_x,rock_y,rock_size,rock_size};
 	bool isrunning=true;
 	int get_fps();
+	int get_width();
+	int get_height();
+	int get_size();
 	void draw_map_game();
-	
+	void draw_hunter(double cord_x, double cord_y);
+};
+
+class m_hunter
+{
+private:
+	double cord_x = 200;
+	double cord_y = 200;
+	double speed = 200;
+	bool isUpPressed = false;
+	bool isDownPressed = false;
+	bool isLeftPressed = false;
+	bool isRightPressed = false;
+public:
+	double get_x();
+	double get_y();
+	void move(int,int,int,int,SDL_Event);
 };

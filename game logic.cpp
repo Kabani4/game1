@@ -41,6 +41,21 @@ int display::get_fps()
 	return FPS;
 }
 
+int display::get_width()
+{
+	return width_win;
+}
+
+int display::get_height()
+{
+	return height_win;
+}
+
+int display::get_size()
+{
+	return rock_size;
+}
+
 void display::draw_map_game()
 {
 	SDL_SetRenderDrawColor(ren, 0,0,0,255);	
@@ -80,4 +95,72 @@ void display::draw_map_game()
 	rock_x = between_rock;
 	rock_y = between_rock;
 	rock = { rock_x,rock_y,rock_size,rock_size };
+}
+
+void display::draw_hunter(double cord_x, double cord_y)
+{
+	SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
+	SDL_RenderDrawPoint(ren,cord_x,cord_y);
+}
+
+double m_hunter::get_x()
+{
+	return cord_x;
+}
+
+double m_hunter::get_y()
+{
+	return cord_y;
+}
+
+void m_hunter::move(int width, int height, int size, int FPS, SDL_Event key_ev)
+{
+	
+		switch (key_ev.type)
+		{
+		case (SDL_KEYDOWN):
+			//switch (key_ev.key.keysym.scancode)
+			//{
+			//
+			//case SDL_SCANCODE_UP:
+			//	if (!isUpPressed)
+			//	isUpPressed = true;
+			//	else
+			//		break;
+			//	break;
+			//case SDL_SCANCODE_DOWN:
+			//	isDownPressed = true;
+			//	break;
+			//case SDL_SCANCODE_LEFT:
+			//	isLeftPressed = true;
+			//	break;
+			//case SDL_SCANCODE_RIGHT:
+			//	isRightPressed = true;
+			//	break;
+			//}
+			//break;
+			
+			case (SDL_KEYUP):
+			switch (key_ev.key.keysym.scancode)
+			{
+			case SDL_SCANCODE_UP:
+				isUpPressed = false;
+				break;
+			case SDL_SCANCODE_DOWN:
+				isDownPressed = false;
+				break;
+			case SDL_SCANCODE_LEFT:
+				isLeftPressed = false;
+				break;
+			case SDL_SCANCODE_RIGHT:
+				isRightPressed = false;
+				break;
+			}
+			break;
+		}
+		
+	if (isUpPressed &&  cord_y - speed / FPS >=size) cord_y = cord_y - speed / FPS;
+	if (isDownPressed  && cord_y + speed / FPS<=height-size) cord_y = cord_y + speed / FPS;
+	if (isLeftPressed  && cord_x - speed / FPS>=size) cord_x = cord_x - speed / FPS;
+	if (isRightPressed  && cord_x + speed / FPS<=width-size) cord_x = cord_x + speed / FPS;
 }
