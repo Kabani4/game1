@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <iostream>
 
-class display
+class Display
 {
 private:
 	int width_win = 640;
@@ -32,7 +32,7 @@ public:
 	void draw_hunter(double cord_x, double cord_y);
 };
 
-class m_hunter
+class M_hunter
 {
 private:
 	double cord_x = 200;
@@ -45,5 +45,6 @@ private:
 public:
 	double get_x();
 	double get_y();
-	void move(int,int,int,int,SDL_Event);
+	void MoveEvent(int,int,int,int,SDL_Event);
+	void MoveHunter(int, int, int, int);
 };

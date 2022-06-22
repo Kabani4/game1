@@ -1,7 +1,7 @@
 #include "game logic.h"
 
 
-void display::INIT()
+void Display::INIT()
 {
 
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
@@ -28,7 +28,7 @@ void display::INIT()
 	}																							
 }																								
 																								
-void display::DEINIT(int error)																					
+void Display::DEINIT(int error)																					
 {																								
 	if (ren != NULL) SDL_DestroyRenderer(ren);
 	if (win != NULL) SDL_DestroyWindow(win);
@@ -36,27 +36,27 @@ void display::DEINIT(int error)
 	exit(error);
 }
 
-int display::get_fps()
+int Display::get_fps()
 {
 	return FPS;
 }
 
-int display::get_width()
+int Display::get_width()
 {
 	return width_win;
 }
 
-int display::get_height()
+int Display::get_height()
 {
 	return height_win;
 }
 
-int display::get_size()
+int Display::get_size()
 {
 	return rock_size;
 }
 
-void display::draw_map_game()
+void Display::draw_map_game()
 {
 	SDL_SetRenderDrawColor(ren, 0,0,0,255);	
 	while (rock_x+ rock_size + between_rock <=width_win)
@@ -97,23 +97,23 @@ void display::draw_map_game()
 	rock = { rock_x,rock_y,rock_size,rock_size };
 }
 
-void display::draw_hunter(double cord_x, double cord_y)
+void Display::draw_hunter(double cord_x, double cord_y)
 {
 	SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
 	SDL_RenderDrawPoint(ren,cord_x,cord_y);
 }
 
-double m_hunter::get_x()
+double M_hunter::get_x()
 {
 	return cord_x;
 }
 
-double m_hunter::get_y()
+double M_hunter::get_y()
 {
 	return cord_y;
 }
 
-void m_hunter::move(int width, int height, int size, int FPS, SDL_Event key_ev)
+void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev)
 {
 	
 		switch (key_ev.type)
@@ -154,9 +154,12 @@ void m_hunter::move(int width, int height, int size, int FPS, SDL_Event key_ev)
 			}
 			break;
 		}
-		
-	if (isUpPressed &&  cord_y - speed / FPS >=size) cord_y = cord_y - speed / FPS;
-	if (isDownPressed  && cord_y + speed / FPS<=height-size) cord_y = cord_y + speed / FPS;
-	if (isLeftPressed  && cord_x - speed / FPS>=size) cord_x = cord_x - speed / FPS;
-	if (isRightPressed  && cord_x + speed / FPS<=width-size) cord_x = cord_x + speed / FPS;
+}
+
+void M_hunter::MoveHunter(int width, int height, int size, int FPS)
+{
+	if (isUpPressed && cord_y - speed / FPS >= size && !isDownPressed) cord_y = cord_y - speed / FPS;
+	if (isDownPressed && cord_y + speed / FPS <= height - size && !isUpPressed) cord_y = cord_y + speed / FPS;
+	if (isLeftPressed && cord_x - speed / FPS >= size && !isRightPressed) cord_x = cord_x - speed / FPS;
+	if (isRightPressed && cord_x + speed / FPS <= width - size && !isLeftPressed) cord_x = cord_x + speed / FPS;
 }
