@@ -1,6 +1,18 @@
 #include "game logic.h"
 
 
+Display::Display(int index)
+{
+	index_game = index;
+	FPS = 60;
+}
+
+Display::Display(int index, int FPS)
+{
+	index_game = index;
+	this->FPS = FPS;
+}
+
 void Display::INIT()
 {
 
@@ -59,58 +71,58 @@ int Display::get_size()
 void Display::draw_map_game()
 {
 	SDL_SetRenderDrawColor(ren, 0,0,0,255);	
-	while (rock_x+ rock_size + between_rock <=width_win)
+	while (rock_coord.x+ rock_size + between_rock <=width_win)
 	{	
-		rock = { rock_x,rock_y,rock_size,rock_size };
+		rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 		SDL_RenderFillRect(ren,&rock);
-		rock_x += rock_size+ between_rock;
+		rock_coord.x += rock_size+ between_rock;
 	}
-	rock_x -= rock_size + between_rock;
-	rock_y += rock_size + between_rock;
-	rock = { rock_x,rock_y,rock_size,rock_size };
-	while (rock_y+ rock_size + between_rock <= height_win)
+	rock_coord.x -= rock_size + between_rock;
+	rock_coord.y += rock_size + between_rock;
+	rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
+	while (rock_coord.y+ rock_size + between_rock <= height_win)
 	{
-		rock = { rock_x,rock_y,rock_size,rock_size };
+		rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 		SDL_RenderFillRect(ren, &rock);
-		rock_y += rock_size + between_rock;
+		rock_coord.y += rock_size + between_rock;
 	}
-	rock_y -= rock_size + between_rock;
-	rock_x -= rock_size + between_rock;
-	rock = { rock_x,rock_y,rock_size,rock_size };
-	while (rock_x+ rock_size + between_rock >= 0)
+	rock_coord.y -= rock_size + between_rock;
+	rock_coord.x -= rock_size + between_rock;
+	rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
+	while (rock_coord.x+ rock_size + between_rock >= 0)
 	{
-		rock = { rock_x,rock_y,rock_size,rock_size };
+		rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 		SDL_RenderFillRect(ren, &rock);
-		rock_x -= rock_size + between_rock;
+		rock_coord.x -= rock_size + between_rock;
 	}
-	rock_x +=2*( rock_size + between_rock);
-	rock_y -= rock_size + between_rock;
-	rock = { rock_x,rock_y,rock_size,rock_size };
-	while (rock_y+ rock_size + between_rock >= 0)
+	rock_coord.x +=2*( rock_size + between_rock);
+	rock_coord.y -= rock_size + between_rock;
+	rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
+	while (rock_coord.y+ rock_size + between_rock >= 0)
 	{
-		rock = { rock_x,rock_y,rock_size,rock_size };
+		rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 		SDL_RenderFillRect(ren, &rock);
-		rock_y -= rock_size + between_rock;
+		rock_coord.y -= rock_size + between_rock;
 	}
-	rock_x = between_rock;
-	rock_y = between_rock;
-	rock = { rock_x,rock_y,rock_size,rock_size };
+	rock_coord.x = between_rock;
+	rock_coord.y = between_rock;
+	rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 }
 
-void Display::draw_hunter(double cord_x, double cord_y)
+void Display::draw_hunter(double coord_x, double coord_y)
 {
 	SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
-	SDL_RenderDrawPoint(ren,cord_x,cord_y);
+	SDL_RenderDrawPoint(ren,coord_x,coord_y);
 }
 
 double M_hunter::get_x()
 {
-	return cord_x;
+	return coord.x;
 }
 
 double M_hunter::get_y()
 {
-	return cord_y;
+	return coord.y;
 }
 
 void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev)
@@ -158,8 +170,54 @@ void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key
 
 void M_hunter::MoveHunter(int width, int height, int size, int FPS)
 {
-	if (isUpPressed && cord_y - speed / FPS >= size && !isDownPressed) cord_y = cord_y - speed / FPS;
-	if (isDownPressed && cord_y + speed / FPS <= height - size && !isUpPressed) cord_y = cord_y + speed / FPS;
-	if (isLeftPressed && cord_x - speed / FPS >= size && !isRightPressed) cord_x = cord_x - speed / FPS;
-	if (isRightPressed && cord_x + speed / FPS <= width - size && !isLeftPressed) cord_x = cord_x + speed / FPS;
+	if (isUpPressed && coord.y - speed / FPS >= size && !isDownPressed) coord.y = coord.y - speed / FPS;
+	if (isDownPressed && coord.y + speed / FPS <= height - size && !isUpPressed) coord.y = coord.y + speed / FPS;
+	if (isLeftPressed && coord.x - speed / FPS >= size && !isRightPressed) coord.x = coord.x - speed / FPS;
+	if (isRightPressed && coord.x + speed / FPS <= width - size && !isLeftPressed) coord.x = coord.x + speed / FPS;
+}
+
+Button::Button(int width, int height)
+{
+	isPressed = false;
+	this->width = width;
+	this->height = height;
+	button.w = width;
+	button.h = height;
+	this->coord_left_up_angle.x = 0;
+	this->coord_left_up_angle.y = 0;
+	button.x = this->coord_left_up_angle.x;
+	button.y = this->coord_left_up_angle.y;
+	this->coord_right_down_angle.x = this->coord_left_up_angle.x + width;
+	this->coord_right_down_angle.y = this->coord_left_up_angle.y + height;
+}
+
+Button::Button(int width, int height, int x, int y)
+{
+	isPressed = false;
+	this->width = width;
+	this->height = height;
+	button.w = width;
+	button.h = height;
+	this->coord_left_up_angle.x = x;
+	this->coord_left_up_angle.y = y;
+	button.x = this->coord_left_up_angle.x;
+	button.y = this->coord_left_up_angle.y;
+	this->coord_right_down_angle.x = this->coord_left_up_angle.x + width;
+	this->coord_right_down_angle.y = this->coord_left_up_angle.y + height;
+}
+
+void Button::Draw_button(SDL_Renderer* ren)
+{
+	SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+	button.x = coord_left_up_angle.x;
+	button.y = coord_left_up_angle.y;
+	SDL_RenderFillRect(ren, &button);
+}
+
+void Button::SetCoord(int x, int y)
+{
+	coord_left_up_angle.x = x;
+	coord_left_up_angle.y = y;
+	coord_right_down_angle.x = coord_left_up_angle.x + width;
+	coord_right_down_angle.y = coord_left_up_angle.y + height;
 }
