@@ -125,6 +125,9 @@ double M_hunter::get_y()
 	return coord.y;
 }
 
+
+
+
 void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev)
 {
 	
@@ -273,4 +276,44 @@ void Button::SetCoord(int x, int y)
 	coord_left_up_angle.y = y;
 	coord_right_down_angle.x = coord_left_up_angle.x + width;
 	coord_right_down_angle.y = coord_left_up_angle.y + height;
+}
+
+
+
+Mushroom::Mushroom()
+{
+	this->coords.x = 0;
+	this->coords.y = 0;
+	
+}
+
+Mushroom::Mushroom(double x,double y)
+{
+	this->coords.x = x;
+	this->coords.y = y;
+
+}
+
+double Mushroom::get_x()
+{
+	return coords.x;
+}
+
+double Mushroom::get_y()
+{
+	return coords.y;
+}
+
+void Mushroom::Add_mush(double mush_x,double mush_y, std::vector<Mushroom>* vector_mushrooms)
+{
+	mush_x +=5;
+	mush_y +=5;
+	Mushroom temp(mush_x,mush_y);
+	vector_mushrooms->push_back(temp);
+}
+
+void Mushroom::Draw_mush(std::vector<Mushroom>* vector_mushrooms,int i)
+{
+	SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+	SDL_RenderDrawPoint(ren, this->get_x(), this->get_y());
 }

@@ -3,8 +3,13 @@
 #include <SDL.h>
 #include <iostream>
 #include "Helping_instruments.h"
+#include <vector>
 
 static bool GameLifetime = true;
+static int Frame_to_spawn_mushroom = 300;
+static int original_frame = 0;
+static int mushroom_counter = 0;
+
 
 class Display
 {
@@ -71,9 +76,15 @@ public:
 class Mushroom
 {
 private:
-	Coord_double coord{ 200, 200 };
-
+	int timer_of_life;
+	Coord_double coords;
 public:
-	
-
+	double get_x();
+	double get_y();
+	void Add_mush(double,double,std::vector<Mushroom>*);
+	void Draw_mush(std::vector<Mushroom>*,int);
+	void Delete_mush();
+	SDL_Renderer* ren;
+	Mushroom();
+	Mushroom(double,double);
 };
