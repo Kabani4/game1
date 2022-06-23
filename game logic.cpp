@@ -65,7 +65,7 @@ int Display::get_height()
 
 int Display::get_size()
 {
-	return rock_size;
+	return rock_size + 4*between_rock;
 }
 
 void Display::draw_map_game()
@@ -170,10 +170,63 @@ void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key
 
 void M_hunter::MoveHunter(int width, int height, int size, int FPS)
 {
-	if (isUpPressed && coord.y - speed / FPS >= size && !isDownPressed) coord.y = coord.y - speed / FPS;
-	if (isDownPressed && coord.y + speed / FPS <= height - size && !isUpPressed) coord.y = coord.y + speed / FPS;
-	if (isLeftPressed && coord.x - speed / FPS >= size && !isRightPressed) coord.x = coord.x - speed / FPS;
-	if (isRightPressed && coord.x + speed / FPS <= width - size && !isLeftPressed) coord.x = coord.x + speed / FPS;
+
+	if (isUpPressed && coord.y - speed / FPS > size && !isDownPressed && !isRightPressed && !isLeftPressed) coord.y = coord.y - speed / FPS;
+	if (isDownPressed && coord.y + speed / FPS < height - size && !isUpPressed && !isRightPressed && !isLeftPressed) coord.y = coord.y + speed / FPS;
+	if (isLeftPressed && coord.x - speed / FPS > size && !isRightPressed && !isUpPressed && !isDownPressed) coord.x = coord.x - speed / FPS;
+	if (isRightPressed && coord.x + speed / FPS < width - size && !isLeftPressed && !isDownPressed && !isUpPressed) coord.x = coord.x + speed / FPS;
+
+	if (isUpPressed && isRightPressed && coord.y - speed / FPS / sqrt(2) > size && coord.x + speed / FPS / sqrt(2) < width - size && !isDownPressed && !isLeftPressed)
+	{
+		coord.y = coord.y - speed / FPS / sqrt(2);
+		coord.x = coord.x + speed / FPS / sqrt(2);
+	}
+
+	else if (isUpPressed && isRightPressed && coord.y - speed / FPS  <= size && coord.x + speed / FPS  < width - size && !isDownPressed && !isLeftPressed)
+		coord.x = coord.x + speed / FPS;
+	else if (isUpPressed && isRightPressed && coord.y - speed / FPS  > size && coord.x + speed / FPS >= width - size && !isDownPressed && !isLeftPressed)
+		coord.y = coord.y - speed / FPS;
+
+	if (isUpPressed && isLeftPressed && coord.y - speed / FPS / sqrt(2) > size && coord.x - speed / FPS / sqrt(2) > size && !isDownPressed && !isRightPressed)
+	{
+		coord.y = coord.y - speed / FPS / sqrt(2);
+		coord.x = coord.x - speed / FPS / sqrt(2);
+	}
+
+	else if (isUpPressed && isLeftPressed && coord.y - speed / FPS  <= size && coord.x - speed / FPS  > size && !isDownPressed && !isRightPressed)
+		coord.x = coord.x - speed / FPS;
+	else if (isUpPressed && isLeftPressed && coord.y - speed / FPS > size && coord.x - speed / FPS <= size && !isDownPressed && !isRightPressed)
+		coord.y = coord.y - speed / FPS;
+
+	if (isDownPressed && isRightPressed && coord.y + speed / FPS / sqrt(2) < height - size && coord.x + speed / FPS / sqrt(2) < width - size && !isUpPressed && !isLeftPressed)
+	{
+		coord.y = coord.y + speed / FPS / sqrt(2);
+		coord.x = coord.x + speed / FPS / sqrt(2);
+	}
+
+	else if (isDownPressed && isRightPressed && coord.y + speed / FPS  >= height - size && coord.x + speed / FPS < width - size && !isUpPressed && !isLeftPressed)
+		coord.x = coord.x + speed / FPS;
+	else if (isDownPressed && isRightPressed && coord.y + speed / FPS  < height - size && coord.x + speed / FPS  >= width - size && !isUpPressed && !isLeftPressed)
+		coord.y = coord.y + speed / FPS;
+	
+
+	if (isDownPressed && isLeftPressed && coord.y + speed / FPS / sqrt(2) < height - size && coord.x - speed / FPS / sqrt(2) > size && !isUpPressed && !isRightPressed)
+	{
+		coord.y = coord.y + speed / FPS / sqrt(2);
+		coord.x = coord.x - speed / FPS / sqrt(2);
+	}
+
+	else if (isDownPressed && isLeftPressed && coord.y + speed / FPS  >= height - size && coord.x - speed / FPS > size && !isUpPressed && !isRightPressed)
+		coord.x = coord.x - speed / FPS;
+	else if (isDownPressed && isLeftPressed && coord.y + speed / FPS  < height - size && coord.x - speed / FPS <= size && !isUpPressed && !isRightPressed)
+		coord.y = coord.y = coord.y + speed / FPS;
+
+
+	if (isUpPressed && isDownPressed && isRightPressed && coord.x + speed / FPS < width - size   && !isLeftPressed) coord.x = coord.x + speed / FPS;
+	if (isUpPressed && isDownPressed && isLeftPressed && coord.x - speed / FPS > size && !isRightPressed) coord.x = coord.x - speed / FPS;
+	if (isRightPressed && isLeftPressed && isUpPressed && coord.y - speed / FPS > size && !isDownPressed) coord.y = coord.y - speed / FPS;
+	if (isRightPressed && isLeftPressed && isDownPressed && coord.y + speed / FPS < height - size && !isUpPressed) coord.y = coord.y + speed / FPS;
+
 }
 
 Button::Button(int width, int height)

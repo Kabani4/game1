@@ -67,3 +67,13 @@ public:
 	void Draw_button(SDL_Renderer*);
 	void SetCoord(int, int);
 };
+
+class Mushroom
+{
+private:
+	Coord_double coord{ 200, 200 };
+
+public:
+	
+
+};
