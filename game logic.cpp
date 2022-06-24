@@ -284,7 +284,6 @@ Mushroom::Mushroom()
 {
 	this->coords.x = 0;
 	this->coords.y = 0;
-	
 }
 
 Mushroom::Mushroom(double x,double y)
@@ -304,16 +303,33 @@ double Mushroom::get_y()
 	return coords.y;
 }
 
-void Mushroom::Add_mush(double mush_x,double mush_y, std::vector<Mushroom>* vector_mushrooms)
+void Add_mush(double pers_x,double pers_y, std::vector<Mushroom*>* vector_mushrooms, int width, int height, int size)
 {
-	mush_x +=5;
-	mush_y +=5;
-	Mushroom temp(mush_x,mush_y);
+	srand(time(NULL));
+	double mush_x = 0, mush_y = 0;
+	mush_x = rand() % (width-size) + size;
+	mush_y = rand() % (height-size) + size;
+	while (abs(pers_x - mush_x) < 20 && abs(pers_y - mush_y) < 20)
+	{
+		mush_x = rand() % (width - size) + size;
+		mush_y = rand() % (height - size) + size;
+	}
+	Mushroom* temp = new Mushroom(mush_x,mush_y);
 	vector_mushrooms->push_back(temp);
 }
 
-void Mushroom::Draw_mush(std::vector<Mushroom>* vector_mushrooms,int i)
+void Mushroom::Draw_mush(SDL_Renderer* ren)
 {
 	SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
-	SDL_RenderDrawPoint(ren, this->get_x(), this->get_y());
+	SDL_RenderDrawPoint(ren, get_x(), get_y());
+}
+
+void Mushroom::Delete_mush(double pers_x, double pers_y, std::vector<Mushroom*>* vector_mushrooms)
+{
+	double mush_x = coords.x;
+	double mush_y = coords.y;
+	if (abs(pers_x - mush_x) < 20 && abs(pers_y - mush_y) < 20)
+	{
+		delete this;
+	}
 }

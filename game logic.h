@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Helping_instruments.h"
 #include <vector>
+#include <ctime>
 
 static bool GameLifetime = true;
 static int Frame_to_spawn_mushroom = 300;
@@ -81,10 +82,9 @@ private:
 public:
 	double get_x();
 	double get_y();
-	void Add_mush(double,double,std::vector<Mushroom>*);
-	void Draw_mush(std::vector<Mushroom>*,int);
-	void Delete_mush();
-	SDL_Renderer* ren;
+	friend void Add_mush(double,double,std::vector<Mushroom*>*,int,int,int);
+	void Draw_mush(SDL_Renderer*);
+	void Delete_mush(double, double, std::vector<Mushroom*>*);
 	Mushroom();
 	Mushroom(double,double);
 };

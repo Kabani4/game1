@@ -6,7 +6,7 @@ int SDL_main(int argc, char* argv[])
 	Display game_win{ 1 };
 	Display main_menu_win{ 0 };
 	M_hunter main_character{};
-	std::vector <Mushroom> vector_mushrooms;
+	std::vector <Mushroom*> vector_mushrooms;
 
 	game_win.INIT();
 
@@ -24,13 +24,17 @@ int SDL_main(int argc, char* argv[])
 		original_frame++;
 		if (original_frame == Frame_to_spawn_mushroom)
 		{
-			vector_mushrooms[mushroom_counter].Add_mush(main_character.get_x(), main_character.get_y(), &vector_mushrooms);
-			mushroom_counter++;
+			Add_mush(main_character.get_x(), main_character.get_y(), &vector_mushrooms, game_win.get_width(), game_win.get_height(), game_win.get_size());
 			original_frame = 0;
+		}
+		
+		for (int i = 0; i < vector_mushrooms.size(); i++)
+		{
+			vector_mushrooms[i]->Delete_mush(main_character.get_x(), main_character.get_y(), &vector_mushrooms);
 		}
 		for (int i=0; i < vector_mushrooms.size(); i++)
 		{
-			vector_mushrooms[i].Draw_mush(&vector_mushrooms,i);
+			vector_mushrooms[i]->Draw_mush(game_win.ren);
 		}
 		
 		
