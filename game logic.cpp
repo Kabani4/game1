@@ -13,7 +13,7 @@ Display::Display(int index, int FPS)
 	this->FPS = FPS;
 }
 
-void Display::INIT()
+void MAIN_WINDOW::INIT()
 {
 
 	if (SDL_Init(SDL_INIT_VIDEO != 0))
@@ -40,7 +40,7 @@ void Display::INIT()
 	}																							
 }																								
 																								
-void Display::DEINIT(int error)																					
+void MAIN_WINDOW::DEINIT(int error)
 {																								
 	if (ren != NULL) SDL_DestroyRenderer(ren);
 	if (win != NULL) SDL_DestroyWindow(win);
@@ -53,12 +53,12 @@ int Display::get_fps()
 	return FPS;
 }
 
-int Display::get_width()
+int MAIN_WINDOW::get_width()
 {
 	return width_win;
 }
 
-int Display::get_height()
+int MAIN_WINDOW::get_height()
 {
 	return height_win;
 }
@@ -68,7 +68,7 @@ int Display::get_size()
 	return rock_size + 4*between_rock;
 }
 
-void Display::draw_map_game()
+void Display::draw_map_game(SDL_Renderer* ren, int width_win, int height_win)
 {
 	SDL_SetRenderDrawColor(ren, 0,0,0,255);	
 	while (rock_coord.x+ rock_size + between_rock <=width_win)
@@ -109,7 +109,7 @@ void Display::draw_map_game()
 	rock = { rock_coord.x,rock_coord.y,rock_size,rock_size };
 }
 
-void Display::draw_hunter(double coord_x, double coord_y)
+void Display::draw_hunter(SDL_Renderer* ren, double coord_x, double coord_y)
 {
 	SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
 	SDL_RenderDrawPoint(ren,coord_x,coord_y);
@@ -124,9 +124,6 @@ double M_hunter::get_y()
 {
 	return coord.y;
 }
-
-
-
 
 void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev)
 {
@@ -262,9 +259,9 @@ Button::Button(int width, int height, int x, int y)
 	this->coord_right_down_angle.y = this->coord_left_up_angle.y + height;
 }
 
-void Button::Draw_button(SDL_Renderer* ren)
+void Button::Draw_button(SDL_Renderer* ren, int red, int green, int blue, int alfa)
 {
-	SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(ren, red, green, blue, alfa);
 	button.x = coord_left_up_angle.x;
 	button.y = coord_left_up_angle.y;
 	SDL_RenderFillRect(ren, &button);
@@ -278,7 +275,34 @@ void Button::SetCoord(int x, int y)
 	coord_right_down_angle.y = coord_left_up_angle.y + height;
 }
 
+int Button::GetWidth()
+{
+	return width;
+}
 
+int Button::GetHeight()
+{
+	return height;
+}
+
+bool Button::Button_click(SDL_Event ev)
+{
+	if (ev.type == SDL_MOUSEBUTTONDOWN && coord_right_down_angle.x - ev.motion.x <= width && coord_right_down_angle.x - ev.motion.x >= 0 && !isPressed && ev.button.button == SDL_BUTTON_LEFT) {
+		isPressed = true;
+	}
+	if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT) {
+		if (coord_right_down_angle.x - ev.motion.x <= width && coord_right_down_angle.x - ev.motion.x >= 0 && isPressed) {
+			isPressed = false;
+			return true;
+		}
+		else
+			isPressed = false;
+	}
+	/*if (ev.type == SDL_MOUSEBUTTONUP && coord_right_down_angle.x - ev.motion.x > width && coord_right_down_angle.x - ev.motion.x < 0 && isPressed && ev.button.button == SDL_BUTTON_LEFT) {
+		isPressed = false;
+	}*/
+	return false;
+}
 
 Mushroom::Mushroom()
 {

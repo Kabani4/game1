@@ -7,16 +7,31 @@
 #include <ctime>
 
 static bool GameLifetime = true;
-static int Frame_to_spawn_mushroom = 300;
+static int Frame_to_spawn_mushroom = 60;
 static int original_frame = 0;
 static int mushroom_counter = 0;
+static int Index_window = 0;
 
 
-class Display
+class MAIN_WINDOW
 {
 private:
 	int width_win = 640;
 	int height_win = 466;
+public:
+	void INIT();
+	void DEINIT(int);
+	SDL_Window* win = NULL;
+	SDL_Renderer* ren = NULL;
+	int get_width();
+	int get_height();
+};
+
+class Display
+{
+private:
+	//int width_win = 640;
+	//int height_win = 466;
 	int FPS;
 	int index_game; // индекс экрана
 	int rock_size = 27;
@@ -26,18 +41,18 @@ private:
 public:
 	Display(int);
 	Display(int, int);
-	void INIT();
-	void DEINIT(int);
-	SDL_Window* win = NULL;
-	SDL_Renderer* ren = NULL;
+	//void INIT();
+	//void DEINIT(int);
+	//SDL_Window* win = NULL;
+	//SDL_Renderer* ren = NULL;
 	SDL_Event ev;
 	SDL_Rect rock = {rock_coord.x,rock_coord.y,rock_size,rock_size};
 	int get_fps();
-	int get_width();
-	int get_height();
+	//int get_width();
+	//int get_height();
 	int get_size();
-	void draw_map_game();
-	void draw_hunter(double, double);
+	void draw_map_game(SDL_Renderer*, int width_win, int height_win);
+	void draw_hunter(SDL_Renderer*, double, double);
 };
 
 class M_hunter
@@ -68,10 +83,13 @@ private:
 	SDL_Rect button;
 
 public:
-	Button(int, int);
+	Button(int width, int height);
 	Button(int, int, int, int);
-	void Draw_button(SDL_Renderer*);
-	void SetCoord(int, int);
+	void Draw_button(SDL_Renderer*, int red, int green, int blue, int alfa);
+	void SetCoord(int x, int y);
+	int GetWidth();
+	int GetHeight();
+	bool Button_click(SDL_Event);
 };
 
 class Mushroom
