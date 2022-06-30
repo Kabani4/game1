@@ -125,7 +125,7 @@ double M_hunter::get_y()
 	return coord.y;
 }
 
-void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev)
+void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key_ev, bool &Run)
 {
 	
 		switch (key_ev.type)
@@ -165,6 +165,12 @@ void M_hunter::MoveEvent(int width, int height, int size, int FPS, SDL_Event key
 				break;
 			}
 			break;
+		}
+		if (!Run) {
+			isUpPressed = false;
+			isDownPressed = false;
+			isLeftPressed = false;
+			isRightPressed = false;
 		}
 }
 
@@ -291,16 +297,13 @@ bool Button::Button_click(SDL_Event ev)
 		isPressed = true;
 	}
 	if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT) {
-		if (coord_right_down_angle.x - ev.motion.x <= width && coord_right_down_angle.x - ev.motion.x >= 0 && isPressed) {
+		if (coord_right_down_angle.x - ev.motion.x <= width && coord_right_down_angle.x - ev.motion.x >= 0 && isPressed && coord_right_down_angle.y - ev.motion.y >= 0 && coord_right_down_angle.y - ev.motion.y <= height) {
 			isPressed = false;
 			return true;
 		}
 		else
 			isPressed = false;
 	}
-	/*if (ev.type == SDL_MOUSEBUTTONUP && coord_right_down_angle.x - ev.motion.x > width && coord_right_down_angle.x - ev.motion.x < 0 && isPressed && ev.button.button == SDL_BUTTON_LEFT) {
-		isPressed = false;
-	}*/
 	return false;
 }
 
@@ -329,7 +332,6 @@ double Mushroom::get_y()
 
 void Add_mush(double pers_x,double pers_y, std::vector<Mushroom*>* vector_mushrooms, int width, int height, int size)
 {
-	srand(time(NULL));
 	double mush_x = 0, mush_y = 0;
 	mush_x = rand() % (width-size) + size;
 	mush_y = rand() % (height-size) + size;
