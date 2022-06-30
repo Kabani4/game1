@@ -10,7 +10,6 @@ static bool GameLifetime = true;
 static bool RunGame = true;
 static int Frame_to_spawn_mushroom = 60;
 static int original_frame = 0;
-static int mushroom_counter = 0;
 static int Index_window = 0;
 
 class MAIN_WINDOW
@@ -99,7 +98,7 @@ public:
 	double get_y();
 	friend void Add_mush(double,double,std::vector<Mushroom*>*,int,int,int);
 	void Draw_mush(SDL_Renderer*);
-	void Delete_mush(double, double, std::vector<Mushroom*>*);
+	bool Delete_mush(double, double, std::vector<Mushroom*>*);
 	Mushroom();
 	Mushroom(double,double);
 };

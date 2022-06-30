@@ -350,12 +350,14 @@ void Mushroom::Draw_mush(SDL_Renderer* ren)
 	SDL_RenderDrawPoint(ren, get_x(), get_y());
 }
 
-void Mushroom::Delete_mush(double pers_x, double pers_y, std::vector<Mushroom*>* vector_mushrooms)
+bool Mushroom::Delete_mush(double pers_x, double pers_y, std::vector<Mushroom*>* vector_mushrooms)
 {
 	double mush_x = coords.x;
 	double mush_y = coords.y;
 	if (abs(pers_x - mush_x) < 20 && abs(pers_y - mush_y) < 20)
 	{
 		delete this;
+		return true;
 	}
+	return false;
 }

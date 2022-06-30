@@ -17,6 +17,8 @@ int SDL_main(int argc, char* argv[])
 	Button Button_change_player{ 250, 50 };
 	Button Button_information{ 250, 50 };
 
+	int Mushroom_score = 0;
+
 	God.INIT();
 	srand(time(NULL));
 
@@ -39,7 +41,11 @@ int SDL_main(int argc, char* argv[])
 			Button_information.Draw_button(God.ren, 0, 255, 0, 255);
 			while (SDL_PollEvent(&main_menu_win.ev))
 			{
-				if (Button_new_game.Button_click(main_menu_win.ev)) Index_window = 1;
+				if (Button_new_game.Button_click(main_menu_win.ev)) {
+					Index_window = 1;
+					system("cls");
+					std::cout << "Score " << Mushroom_score << std::endl;
+				}
 				if (Button_exit.Button_click(main_menu_win.ev)) GameLifetime = false;
 			}
 			break;
@@ -69,7 +75,13 @@ int SDL_main(int argc, char* argv[])
 
 				for (int i = 0; i < vector_mushrooms.size(); i++)
 				{
-					vector_mushrooms[i]->Delete_mush(main_character.get_x(), main_character.get_y(), &vector_mushrooms);
+					if (vector_mushrooms[i]->Delete_mush(main_character.get_x(), main_character.get_y(), &vector_mushrooms))
+					{
+						Mushroom_score += 1;
+						system("cls");
+						std::cout << "Score " << Mushroom_score << std::endl;
+					}
+
 				}
 			}
 			for (int i = 0; i < vector_mushrooms.size(); i++)
@@ -78,7 +90,6 @@ int SDL_main(int argc, char* argv[])
 			}
 			break;
 		}
-		
 		
 		SDL_RenderPresent(God.ren);
 		switch (Index_window)
